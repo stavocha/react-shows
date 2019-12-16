@@ -1,7 +1,7 @@
 import React from 'react'
-import { storeContext } from '../stores/StoresContext';
+import { storeContext } from '../stores/StoreContext';
 
-export const useStore = () => {
+export default function useStore () {
     const store = React.useContext(storeContext);
     if (!store) {
         // this is especially useful in TypeScript so you don't need to be checking for null all the time

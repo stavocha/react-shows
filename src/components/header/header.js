@@ -1,42 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import Styled from './styled-components';
+import { useHistory } from 'react-router-dom';
 import { useObserver } from 'mobx-react-lite';
-import useDebounce from '../../hooks/useDebounce';
 
-import { useStore } from '../../hooks/useStore';
+import { useStore, useDebounce } from '../../hooks';
+import Styled from './styled-components';
 
 const Header = () => {
 
-    const [count, setCount] = useState(0);
+    const history = useHistory();
     const [query, setQuery] = useState('');
     const bedouncedQuery = useDebounce(query, 500);
 
-    const {
-        actorStore,
-        showsStore,
-    } = useStore();
-
-    useEffect(() => {
-        fetch(`http://api.tvmaze.com/people/${count}`)
-            .then(res => res.json())
-            .then(actor => actorStore.setActor(actor));
-
-    }, [count, actorStore]);
+    const { showsStore } = useStore();
 
     useEffect(() => {
         fetch(`http://api.tvmaze.com/search/shows?q=${bedouncedQuery}`)
             .then(res => res.json())
-            .then((shows) => {
-                console.log(shows);
-                showsStore.setShows(shows);
-            });
+            .then(shows => showsStore.setShows(shows))
+            .then(() => history.push('/'));
 
-    }, [bedouncedQuery, showsStore]);
+    }, [bedouncedQuery, showsStore, history]);
 
     return useObserver(() => (
-        <Styled.Header onClick={() => setCount(count + 1)}>
-            Search show, {actorStore.name}:
+        <Styled.Header>
+            Search show:
             <Styled.StyledInput value={query} onChange={e => setQuery(e.target.value)} />
+            { showsStore.show &&
+                <div>Current Show: {showsStore.show.name}</div>
+            }
         </Styled.Header>
     ));
 };
