@@ -2,9 +2,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import get from 'lodash/get';
 
+import './tile.css';
 import { TileTypes } from '../';
 import { useStore } from '../../hooks';
-import Styled from './styled-components';
 
 const Tile = ({ type, data, hideSummary, hideName }) => {
 
@@ -57,18 +57,18 @@ const Tile = ({ type, data, hideSummary, hideName }) => {
     const [imgSource, name] = processData();
 
     return (
-        <Styled.Tile onClick={handleClick}>
-            {imgSource &&
+        <div className="tile" onClick={handleClick}>
+            <div className="image">
                 <img
-                    alt=""
+                    alt={name}
                     src={imgSource}
                 />
-            }
-            {!hideName && name}
-            {data.summary && !hideSummary &&
+                {!hideName && name}
+            </div>
+            {!hideSummary && data.summary &&
                 <div dangerouslySetInnerHTML={{ __html: data.summary}}></div>
             }
-        </Styled.Tile>
+        </div>
     );
 };
 
