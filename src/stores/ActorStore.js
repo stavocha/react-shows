@@ -1,4 +1,3 @@
-
 export const createActorStore = () => {
     return {
         actor: null,

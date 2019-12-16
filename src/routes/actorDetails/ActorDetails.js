@@ -4,7 +4,7 @@ import { useObserver } from 'mobx-react-lite';
 
 import { useStore } from '../../hooks';
 import { Tile, TileTypes } from '../../components';
-import Styled from './styled-components';
+import "./actor.css";
 
 function ActorDetails() {
 
@@ -13,6 +13,7 @@ function ActorDetails() {
     const { actorStore } = useStore();
 
     useEffect(() => {
+        // fetch actor credits (which shows he/she played in)
         fetch(`http://api.tvmaze.com/people/${actorId}/castcredits?embed=show`)
             .then(res => res.json())
             .then(credits => credits.map(credit => credit._embedded.show))
@@ -20,18 +21,16 @@ function ActorDetails() {
     }, [actorId])
 
     return useObserver(() => (
-        <Styled.ActorDetails>
+        <div>
             {actorStore.actor && (
-                <React.Fragment>
-                    <Tile type={TileTypes.actor} data={actorStore.actor} />
-                </React.Fragment>
+                <Tile type={TileTypes.actor} data={actorStore.actor} />
             )}
-            {credits && credits.map(show => (
-                <React.Fragment key={show.id}>
-                    <Tile type={TileTypes.show} data={show} hideSummary />
-                </React.Fragment>
-            ))}
-        </Styled.ActorDetails>
+            <div className="credits">
+                {credits && credits.map(show => (
+                    <Tile type={TileTypes.show} data={show} hideSummary hideName />
+                ))}
+            </div>
+        </div>
     ));
 }
 

@@ -1,0 +1,17 @@
+.tile {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    margin: 1rem;
+    width: fit-content;
+}
+
+.image {
+    display: flex;
+    flex-direction: column;
+
+}
+
+img {
+    width: fit-content;
+}

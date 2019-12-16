@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import './showDetails.css';
 import { Tile, TileTypes } from '../../components';
-import Styled from './styled-components';
 
 function ShowDetails() {
 
@@ -10,24 +10,25 @@ function ShowDetails() {
     const { showId } = useParams();
 
     useEffect(() => {
+        // fetch show with embedded cast
         fetch(`http://api.tvmaze.com/shows/${showId}?embed[]=cast`)
             .then(res => res.json())
             .then(show => setShow(show));
     }, [showId])
 
     return (
-        <Styled.ShowDetails>
+        <div>
             {show && (
-                <React.Fragment>
-                    <Tile type={TileTypes.show} data={show} />
-                    {show._embedded.cast.map(cast => (
-                        <React.Fragment key={cast.character.id}>
-                            <Tile type={TileTypes.character} data={cast} />
-                        </React.Fragment>
-                    ))}
-                </React.Fragment>
+                <div>
+                    <Tile type={TileTypes.show} data={show} hideName />
+                    <div className="characters">
+                        {show._embedded.cast.map(cast => (
+                                <Tile type={TileTypes.character} data={cast} key={cast.character.id}/>
+                        ))}
+                    </div>
+                </div>
             )}
-        </Styled.ShowDetails>
+        </div>
     );
 }
 

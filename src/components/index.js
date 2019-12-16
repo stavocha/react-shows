@@ -1,5 +1,5 @@
-export Header from './header/Header';
-export List from './list/List';
+export Header from './header/header';
+export List from './list/list';
 export Tile from './tile/Tile';
 
 export const TileTypes = {
