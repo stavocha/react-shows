@@ -1,11 +1,20 @@
+import { observable, computed, action } from 'mobx';
+
+export class ActorStore {
+    @observable
+    actor = null;
+
+    @action
+    setActor(actor) {
+        this.actor = actor;
+    }
+
+    @computed
+    get name() {
+        return this.actor ? this.actor.name : '';
+    }
+}
+
 export const createActorStore = () => {
-    return {
-        actor: null,
-        setActor(actor) {
-            this.actor = actor;
-        },
-        get name() {
-            return this.actor ? this.actor.name : '';
-        },
-    };
+    return new ActorStore();
 }

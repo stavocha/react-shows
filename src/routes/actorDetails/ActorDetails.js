@@ -1,37 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useObserver } from 'mobx-react-lite';
+import React from 'react';
+import { observer, inject } from 'mobx-react';
+import { withRouter } from 'react-router';
 
-import { useStore } from '../../hooks';
 import { Tile, TileTypes } from '../../components';
 import "./actor.css";
 
-function ActorDetails() {
+@inject('stores')
+@observer
+class ActorDetails extends React.Component {
 
-    const [credits, setCredits] = useState(null);
-    const { actorId } = useParams();
-    const { actorStore } = useStore();
+    state = {
+        credits: null,
+    };
 
-    useEffect(() => {
-        // fetch actor credits (which shows he/she played in)
+    componentDidMount() {
+        const { actorId } = this.props.match.params;
+
         fetch(`http://api.tvmaze.com/people/${actorId}/castcredits?embed=show`)
             .then(res => res.json())
             .then(credits => credits.map(credit => credit._embedded.show))
-            .then(credits => setCredits(credits));
-    }, [actorId])
+            .then(credits => this.setState({credits}));
+    }
 
-    return useObserver(() => (
-        <div>
-            {actorStore.actor && (
-                <Tile type={TileTypes.actor} data={actorStore.actor} />
-            )}
-            <div className="credits">
-                {credits && credits.map(show => (
-                    <Tile type={TileTypes.show} data={show} hideSummary hideName />
-                ))}
+    render() {
+        const { actorStore } = this.props.stores;
+        const { credits } = this.state;
+
+        return (
+            <div>
+                {actorStore.actor && (
+                    <Tile type={TileTypes.actor} data={actorStore.actor} />
+                )}
+                <div className="credits">
+                    {credits && credits.map(show => (
+                        <Tile type={TileTypes.show} data={show} key={show.id} hideSummary hideName />
+                    ))}
+                </div>
             </div>
-        </div>
-    ));
-}
+        );
+    }
+};
 
-export default ActorDetails;
+export default withRouter(ActorDetails);

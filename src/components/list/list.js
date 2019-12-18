@@ -1,23 +1,27 @@
 import React from 'react';
-import { useObserver } from 'mobx-react-lite';
+import { observer, inject } from 'mobx-react';
 
 import './list.css';
-import { useStore } from '../../hooks';
 import { Tile, TileTypes } from '../../components'
 
-const List = () => {
+@inject('stores')
+@observer
+class List extends React.Component {
 
-    const { showsStore } = useStore();
+    render() {
+        const { showsStore } = this.props.stores;
 
-    return useObserver(() => (
-        <div className="list">
-            { showsStore.showsPlain.map((show) => {
-                return (
-                    <Tile type={TileTypes.show} data={show} key={show.id} hideSummary hideName />
-                );
-            })}
-        </div>
-    ));
+        return (
+            <div className="list">
+                { showsStore.showsPlain.map((show) => {
+                    return (
+                        <Tile type={TileTypes.show} data={show} key={show.id} hideSummary hideName />
+                    );
+                })}
+            </div>
+        );
+    }
+
 };
 
 export default List;

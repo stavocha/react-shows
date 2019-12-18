@@ -1,39 +1,16 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import get from 'lodash/get';
+import { observer, inject } from 'mobx-react';
+import { withRouter } from 'react-router';
 
 import './tile.css';
 import { TileTypes } from '../';
-import { useStore } from '../../hooks';
 
-const Tile = ({ type, data, hideSummary, hideName }) => {
+@inject('stores')
+@observer
+class Tile extends React.Component {
 
-    const history = useHistory();
-    const {
-        showsStore,
-        actorStore,
-    } = useStore();
-
-    const handleClick = () => {
-        let url = '';
-        switch(type) {
-            case TileTypes.show:
-                showsStore.setCurrentShow(data);
-                url = `/show/${data.id}`;
-                break;
-            case TileTypes.character:
-                actorStore.setActor(data);
-                url = `/actor/${data.person.id}`;
-                break;
-            case TileTypes.season:
-            case TileTypes.actor:
-            default:
-                return;
-        }
-        history.push(url);
-    }
-
-    const processData = () => {
+    processData = (type, data) => {
         if (type === TileTypes.character) {
             return [
                 get(data, 'character.image.medium', ''),
@@ -54,22 +31,57 @@ const Tile = ({ type, data, hideSummary, hideName }) => {
         ];
     }
 
-    const [imgSource, name] = processData();
+    handleClick = () => {
+        const {
+            history,
+            type,
+            data,
+            stores,
+        } = this.props;
 
-    return (
-        <div className="tile" onClick={handleClick}>
-            <div className="image">
-                <img
-                    alt={name}
-                    src={imgSource}
-                />
-                {!hideName && name}
+        const {
+            showsStore,
+            actorStore,
+        } = stores;
+
+        let url = '';
+        switch(type) {
+            case TileTypes.show:
+                showsStore.setCurrentShow(data);
+                url = `/show/${data.id}`;
+                break;
+            case TileTypes.character:
+                actorStore.setActor(data);
+                url = `/actor/${data.person.id}`;
+                break;
+            case TileTypes.season:
+            case TileTypes.actor:
+            default:
+                return;
+        }
+        history.push(url);
+    }
+
+    render() {
+        const { type, data, hideSummary, hideName } = this.props;
+        const [imgSource, name] = this.processData(type, data);
+
+        return (
+            <div className="tile" onClick={this.handleClick}>
+                <div className="image">
+                    <img
+                        alt={name}
+                        src={imgSource}
+                    />
+                    {!hideName && name}
+                </div>
+                {!hideSummary && data.summary &&
+                    <div dangerouslySetInnerHTML={{ __html: data.summary}}></div>
+                }
             </div>
-            {!hideSummary && data.summary &&
-                <div dangerouslySetInnerHTML={{ __html: data.summary}}></div>
-            }
-        </div>
-    );
+        );
+    }
+
 };
 
-export default Tile;
+export default withRouter(Tile);

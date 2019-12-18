@@ -1,12 +1,12 @@
 import React from 'react';
 import { List } from '../../components';
 
-function Home() {
+const Home = () => {
   return (
     <div>
         <List></List>
     </div>
   );
-}
+};
 
 export default Home;

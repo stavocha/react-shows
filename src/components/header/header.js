@@ -1,45 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useObserver } from 'mobx-react-lite';
+import React from 'react';
+import { computed, autorun } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import Input from '@material-ui/core/Input';
+import { withRouter } from 'react-router';
 
-import { useStore, useDebounce } from '../../hooks';
 import './header.css';
 
-const Header = () => {
+@inject('stores')
+@observer
+class Header extends React.Component {
 
-    const history = useHistory();
-    const [query, setQuery] = useState('');
-    const bedouncedQuery = useDebounce(query, 500);
+    state = {
+        query: '',
+    };
 
-    const {
-        showsStore,
-        actorStore,
-    } = useStore();
+    disposer = autorun(() => {
+        const { stores } = this.props;
+        const { showsStore } = stores;
 
-    useEffect(() => {
-        // fetch shows based on debounced query
-        fetch(`http://api.tvmaze.com/search/shows?q=${bedouncedQuery}`)
+        fetch(`http://api.tvmaze.com/search/shows?q=${this.query}`)
             .then(res => res.json())
-            .then(shows => showsStore.setShows(shows))
-            .then(() => history.push('/'));
+            .then(shows => showsStore.setShows(shows));
+    });
 
-    }, [bedouncedQuery, showsStore, history]);
+    componentWillUnmount() {
+        this.disposer();
+    }
 
-    return useObserver(() => (
-        <div className="header">
-            <div>
-                Search show:
-                <Input value={query} onChange={e => setQuery(e.target.value)} />
+    @computed
+    get query() {
+        return this.state.query;
+    }
+
+    render() {
+        const {
+            showsStore,
+            actorStore,
+        } = this.props.stores;
+
+        const { query } = this.state;
+
+        return (
+            <div className="header">
+                <div>
+                    Search show:
+                    <Input value={query} onChange={e => this.setState({query: e.target.value})} />
+                </div>
+                { showsStore.show &&
+                    <div>Current Show: {showsStore.show.name}</div>
+                }
+                { actorStore.actor &&
+                    <div>Current Actor: {actorStore.actor.person.name} </div>
+                }
             </div>
-            { showsStore.show &&
-                <div>Current Show: {showsStore.show.name}</div>
-            }
-            { actorStore.actor &&
-                <div>Current Actor: {actorStore.actor.person.name} </div>
-            }
-        </div>
-    ));
-};
+        );
+    }
+}
 
-export default Header;
+export default withRouter(Header);

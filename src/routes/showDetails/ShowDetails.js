@@ -1,35 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { withRouter } from 'react-router';
 
 import './showDetails.css';
 import { Tile, TileTypes } from '../../components';
 
-function ShowDetails() {
+class ShowDetails extends React.Component {
 
-    const [show, setShow] = useState(null);
-    const { showId } = useParams();
+    state = {
+        show: null,
+    };
 
-    useEffect(() => {
+    componentDidMount() {
+        const { showId } = this.props.match.params;
+
         // fetch show with embedded cast
         fetch(`http://api.tvmaze.com/shows/${showId}?embed[]=cast`)
             .then(res => res.json())
-            .then(show => setShow(show));
-    }, [showId])
+            .then(show => this.setState({show}));
+    }
 
-    return (
-        <div>
-            {show && (
-                <div>
-                    <Tile type={TileTypes.show} data={show} hideName />
-                    <div className="characters">
-                        {show._embedded.cast.map(cast => (
+    render() {
+        const { show } = this.state;
+
+        return (
+            <div>
+                {show && (
+                    <div>
+                        <Tile type={TileTypes.show} data={show} hideName />
+                        <div className="characters">
+                            {show._embedded.cast.map(cast => (
                                 <Tile type={TileTypes.character} data={cast} key={cast.character.id}/>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
-    );
+                )}
+            </div>
+        );
+    }
 }
 
-export default ShowDetails;
+export default withRouter(ShowDetails);
