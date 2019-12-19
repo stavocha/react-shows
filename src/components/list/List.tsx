@@ -10,6 +10,8 @@ interface Props {
 }
 
 export default function List({ items, itemType }: Props): ReactElement {
+    console.log('items', items);
+
     return (
         <div className="list">
             {items.map(show => {

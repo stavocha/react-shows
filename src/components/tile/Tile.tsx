@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Item, TileTypes } from '../../types';
-
+import './tile.css';
 interface Props {
     data: Item;
     type: TileTypes;
@@ -10,12 +10,18 @@ interface Props {
 
 export default function Tile({
     data: { pic, title, description },
+    hideSummary,
 }: Props): ReactElement {
     return (
-        <div>
-            <div>title</div>
-            <img src={pic} />
-            <p>{description}</p>
+        <div className="tile">
+            <div className="image">
+                <img src={pic} />
+            </div>
+
+            <h4>{title}</h4>
+            {!hideSummary && (
+                <div dangerouslySetInnerHTML={{ __html: description }}></div>
+            )}
         </div>
     );
 }
