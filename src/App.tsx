@@ -1,29 +1,59 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import Header from './components/header/Header';
 import List from './components/list/List';
 import { TileTypes, Item } from './types';
 import './App.css';
-import { shows as rawShows } from './mocks';
+// import { shows as rawShows } from './mocks';
 
-const shows: Item[] = rawShows
-    .filter(show => show.show.image)
-    .map(({ show }) => {
-        console.log(show);
+// Mock data
+// TODO - replace with real
+// const shows: Item[] = rawShows
+//     .filter(show => show.show.image)
+//     .map(formatRawShows);
 
-        return {
-            id: show.id,
-            pic: show.image.medium,
-            title: show.name,
-            description: show.summary,
-        } as Item;
-    });
-const App: React.FC = () => {
-    return (
-        <div className="App">
-            <Header />
-            <List items={shows} itemType={TileTypes.ShowTile} />
-        </div>
-    );
-};
+function formatRawShows(item: any): Item {
+    const { score, show } = item;
+    return {
+        id: show.id,
+        pic: show.image ? show.image.medium : '', // unsafe...
+        title: show.name,
+        score,
+        description: show.summary,
+    };
+}
+
+interface Props {}
+
+interface State {
+    q: string;
+    shows: Item[];
+}
+
+class App extends React.Component<Props, State> {
+    state = {
+        q: '',
+        shows: [],
+    };
+
+    handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const query = event.target.value;
+        this.setState({ q: query });
+
+        // fetch from API
+        fetch(`http://api.tvmaze.com/search/shows?q=${query}`)
+            .then(res => res.json())
+            .then(data => this.setState({ shows: data.map(formatRawShows) }));
+    };
+
+    render() {
+        const { q, shows } = this.state;
+        return (
+            <div className="App">
+                <Header handleSearchChange={this.handleSearchChange} q={q} />
+                <List items={shows} itemType={TileTypes.ShowTile} />
+            </div>
+        );
+    }
+}
 
 export default App;

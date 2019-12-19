@@ -1,12 +1,22 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ChangeEvent } from 'react';
+import './header.css';
 
-interface Props {}
+interface Props {
+    q: string;
+    handleSearchChange(q: ChangeEvent<HTMLInputElement>): void;
+}
 
-export default function Header({}: Props): ReactElement {
+export default function Header({ q, handleSearchChange }: Props): ReactElement {
     return (
         <div className="header">
-            <input type="text" />
-            <button>Search</button>
+            <div>
+                <input
+                    type="search"
+                    placeholder="Search"
+                    value={q}
+                    onChange={handleSearchChange}
+                />
+            </div>
         </div>
     );
 }
