@@ -27,9 +27,10 @@ const Header = () => {
     }, [bedouncedQuery, showsStore, history]);
 
     const goHome = () => {
-        history.push('/');
         setQuery('');
+        showsStore.setShows([]);
         showsStore.setCurrentShow(null);
+        history.push('/');
     }
     return useObserver(() => (
         <div className="header">
