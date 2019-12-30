@@ -26,8 +26,8 @@ function ActorDetails() {
                 <Tile type={TileTypes.actor} data={actorStore.actor} />
             )}
             <div className="credits">
-                {credits && credits.map(show => (
-                    <Tile type={TileTypes.show} data={show} hideSummary hideName />
+                {credits && credits.map((show,index) => (
+                    <Tile type={TileTypes.show} data={show} key={`tile-${index}`} hideSummary hideName />
                 ))}
             </div>
         </div>
