@@ -1,0 +1,208 @@
+{
+    "id": 396,
+    "url": "http://www.tvmaze.com/shows/396/gravity-falls",
+    "name": "Gravity Falls",
+    "type": "Animation",
+    "language": "English",
+    "genres": ["Adventure", "Mystery", "Supernatural"],
+    "status": "Ended",
+    "runtime": 30,
+    "premiered": "2012-06-15",
+    "officialSite": null,
+    "schedule": {
+        "time": "19:00",
+        "days": ["Monday"]
+    },
+    "rating": {
+        "average": 9.1
+    },
+    "weight": 80,
+    "network": {
+        "id": 25,
+        "name": "Disney XD",
+        "country": {
+            "name": "United States",
+            "code": "US",
+            "timezone": "America/New_York"
+        }
+    },
+    "webChannel": null,
+    "externals": {
+        "tvrage": 31839,
+        "thetvdb": 259972,
+        "imdb": "tt1865718"
+    },
+    "image": {
+        "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/2/6140.jpg",
+        "original": "http://static.tvmaze.com/uploads/images/original_untouched/2/6140.jpg"
+    },
+    "summary": "<p>Twin brother and sister Dipper and Mabel Pines are in for an unexpected adventure when they spend the summer with their great Uncle in the mysterious town of Gravity Falls, Oregon.</p>",
+    "updated": 1573670748,
+    "_links": {
+        "self": {
+            "href": "http://api.tvmaze.com/shows/396"
+        },
+        "previousepisode": {
+            "href": "http://api.tvmaze.com/episodes/483406"
+        }
+    },
+    "_embedded": {
+        "cast": [{
+            "person": {
+                "id": 43102,
+                "url": "http://www.tvmaze.com/people/43102/alex-hirsch",
+                "name": "Alex Hirsch",
+                "country": {
+                    "name": "United States",
+                    "code": "US",
+                    "timezone": "America/New_York"
+                },
+                "birthday": "1985-06-18",
+                "deathday": null,
+                "gender": "Male",
+                "image": {
+                    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/3/9733.jpg",
+                    "original": "http://static.tvmaze.com/uploads/images/original_untouched/3/9733.jpg"
+                },
+                "_links": {
+                    "self": {
+                        "href": "http://api.tvmaze.com/people/43102"
+                    }
+                }
+            },
+            "character": {
+                "id": 72428,
+                "url": "http://www.tvmaze.com/characters/72428/gravity-falls-grunkle-stan",
+                "name": "Grunkle Stan",
+                "image": {
+                    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/15/37872.jpg",
+                    "original": "http://static.tvmaze.com/uploads/images/original_untouched/15/37872.jpg"
+                },
+                "_links": {
+                    "self": {
+                        "href": "http://api.tvmaze.com/characters/72428"
+                    }
+                }
+            },
+            "self": false,
+            "voice": true
+        }, {
+            "person": {
+                "id": 43102,
+                "url": "http://www.tvmaze.com/people/43102/alex-hirsch",
+                "name": "Alex Hirsch",
+                "country": {
+                    "name": "United States",
+                    "code": "US",
+                    "timezone": "America/New_York"
+                },
+                "birthday": "1985-06-18",
+                "deathday": null,
+                "gender": "Male",
+                "image": {
+                    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/3/9733.jpg",
+                    "original": "http://static.tvmaze.com/uploads/images/original_untouched/3/9733.jpg"
+                },
+                "_links": {
+                    "self": {
+                        "href": "http://api.tvmaze.com/people/43102"
+                    }
+                }
+            },
+            "character": {
+                "id": 72432,
+                "url": "http://www.tvmaze.com/characters/72432/gravity-falls-soos",
+                "name": "Soos",
+                "image": {
+                    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/15/37869.jpg",
+                    "original": "http://static.tvmaze.com/uploads/images/original_untouched/15/37869.jpg"
+                },
+                "_links": {
+                    "self": {
+                        "href": "http://api.tvmaze.com/characters/72432"
+                    }
+                }
+            },
+            "self": false,
+            "voice": true
+        }, {
+            "person": {
+                "id": 160,
+                "url": "http://www.tvmaze.com/people/160/linda-cardellini",
+                "name": "Linda Cardellini",
+                "country": {
+                    "name": "United States",
+                    "code": "US",
+                    "timezone": "America/New_York"
+                },
+                "birthday": "1975-06-25",
+                "deathday": null,
+                "gender": "Female",
+                "image": {
+                    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/3/9735.jpg",
+                    "original": "http://static.tvmaze.com/uploads/images/original_untouched/3/9735.jpg"
+                },
+                "_links": {
+                    "self": {
+                        "href": "http://api.tvmaze.com/people/160"
+                    }
+                }
+            },
+            "character": {
+                "id": 72431,
+                "url": "http://www.tvmaze.com/characters/72431/gravity-falls-wendy",
+                "name": "Wendy",
+                "image": {
+                    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/15/37871.jpg",
+                    "original": "http://static.tvmaze.com/uploads/images/original_untouched/15/37871.jpg"
+                },
+                "_links": {
+                    "self": {
+                        "href": "http://api.tvmaze.com/characters/72431"
+                    }
+                }
+            },
+            "self": false,
+            "voice": true
+        }, {
+            "person": {
+                "id": 12051,
+                "url": "http://www.tvmaze.com/people/12051/kristen-schaal",
+                "name": "Kristen Schaal",
+                "country": {
+                    "name": "United States",
+                    "code": "US",
+                    "timezone": "America/New_York"
+                },
+                "birthday": "1978-01-19",
+                "deathday": null,
+                "gender": "Female",
+                "image": {
+                    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/2/7472.jpg",
+                    "original": "http://static.tvmaze.com/uploads/images/original_untouched/2/7472.jpg"
+                },
+                "_links": {
+                    "self": {
+                        "href": "http://api.tvmaze.com/people/12051"
+                    }
+                }
+            },
+            "character": {
+                "id": 72430,
+                "url": "http://www.tvmaze.com/characters/72430/gravity-falls-mabel-pines",
+                "name": "Mabel Pines",
+                "image": {
+                    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/15/39282.jpg",
+                    "original": "http://static.tvmaze.com/uploads/images/original_untouched/15/39282.jpg"
+                },
+                "_links": {
+                    "self": {
+                        "href": "http://api.tvmaze.com/characters/72430"
+                    }
+                }
+            },
+            "self": false,
+            "voice": true
+        }]
+    }
+}
