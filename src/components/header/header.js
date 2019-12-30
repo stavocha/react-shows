@@ -21,13 +21,21 @@ const Header = () => {
         // fetch shows based on debounced query
         fetch(`http://api.tvmaze.com/search/shows?q=${bedouncedQuery}`)
             .then(res => res.json())
-            .then(shows => showsStore.setShows(shows))
-            .then(() => history.push('/'));
+            .then(shows => showsStore.setShows(shows));
+            // .then(() => history.push('/'));
 
     }, [bedouncedQuery, showsStore, history]);
 
+    const goHome = () => {
+        history.push('/');
+        setQuery('');
+        showsStore.setCurrentShow(null);
+    }
     return useObserver(() => (
         <div className="header">
+            { (history.location.pathname === '/') ? null : 
+                <div className="anchored-top-left" onClick={goHome}>Home</div>
+            }
             <div>
                 Search show:
                 <Input value={query} onChange={e => setQuery(e.target.value)} />

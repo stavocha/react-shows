@@ -3,3 +3,12 @@
     justify-content: space-evenly;
     align-items: center;
 }
+.anchored-top-left {
+    position: absolute;
+    left:10px;
+    top:10px;
+    cursor: pointer;
+}
+.anchored-top-left:hover {
+    text-decoration: underline;
+}
