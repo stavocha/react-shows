@@ -165,7 +165,6 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^3.8.1",
     "eslint-plugin-cypress": "^2.8.1"
   }
 }
