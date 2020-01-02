@@ -10,21 +10,21 @@ interface Props {
 }
 
 export default function List({ items, itemType }: Props): ReactElement {
-    console.log('items', items);
-
     return (
         <div className="list">
-            {items.map(show => {
-                return (
-                    <Tile
-                        type={itemType}
-                        data={show}
-                        key={show.id}
-                        hideSummary
-                        hideName
-                    />
-                );
-            })}
+            {items
+                .filter(show => show.pic)
+                .map(show => {
+                    return (
+                        <Tile
+                            type={itemType}
+                            data={show}
+                            key={show.id}
+                            hideSummary
+                            hideName
+                        />
+                    );
+                })}
         </div>
     );
 }

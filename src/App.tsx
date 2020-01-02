@@ -1,8 +1,16 @@
 import React, { ChangeEvent } from 'react';
+import {
+    HashRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from 'react-router-dom';
 import Header from './components/header/Header';
 import List from './components/list/List';
 import { TileTypes, Item } from './types';
 import './App.css';
+import Show from './routes/Show';
+import { Home } from './routes/Home';
 // import { shows as rawShows } from './mocks';
 
 // Mock data
@@ -49,8 +57,20 @@ class App extends React.Component<Props, State> {
         const { q, shows } = this.state;
         return (
             <div className="App">
-                <Header handleSearchChange={this.handleSearchChange} q={q} />
-                <List items={shows} itemType={TileTypes.ShowTile} />
+                <Router>
+                    <Switch>
+                        <Route path="/home">
+                            <Home
+                                q={q}
+                                shows={shows}
+                                handleSearchChange={this.handleSearchChange}
+                            />
+                        </Route>
+                        <Route path="/show/:id" component={Show} />
+
+                        <Redirect to="/home" />
+                    </Switch>
+                </Router>
             </div>
         );
     }
