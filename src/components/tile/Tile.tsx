@@ -3,14 +3,14 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { Item, TileTypes } from '../../types';
 import './tile.css';
-interface Props extends RouteComponentProps {
+export interface Props extends RouteComponentProps {
     data: Item;
     type: TileTypes;
     hideSummary?: boolean;
     hideName?: boolean;
 }
 
-function Tile({
+export function Tile({
     data: { pic, title, description, id },
     hideSummary,
     history,
@@ -18,9 +18,8 @@ function Tile({
     return (
         <div className="tile">
             <div className="image" onClick={() => history.push(`/show/${id}`)}>
-                <img src={pic} />
+                <img src={pic} alt={title} />
             </div>
-
             <h4>
                 {title} {id}
             </h4>
