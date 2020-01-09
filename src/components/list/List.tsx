@@ -11,7 +11,7 @@ interface Props {
 
 export default function List({ items, itemType }: Props): ReactElement {
     return (
-        <div className="list">
+        <div className="list" role="list">
             {items
                 .filter(show => show.pic)
                 .map(show => {
