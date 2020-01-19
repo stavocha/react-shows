@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-
 import { Item, TileTypes } from '../../types';
 import './tile.css';
-export interface Props extends RouteComponentProps {
+export interface Props {
     data: Item;
+    onTileClick?: (id: string) => void;
     type: TileTypes;
     hideSummary?: boolean;
     hideName?: boolean;
@@ -13,11 +12,11 @@ export interface Props extends RouteComponentProps {
 function Tile({
     data: { pic, title, description, id },
     hideSummary,
-    history,
+    onTileClick,
 }: Props): ReactElement {
     return (
         <div className="tile" data-testid="tile">
-            <div className="image" role="button" onClick={() => history.push(`/show/${id}`)}>
+            <div className="image" role="button" onClick={() => onTileClick && onTileClick(id) }>
                 <img src={pic} alt={title} />
             </div>
             <h4>
@@ -30,4 +29,4 @@ function Tile({
     );
 }
 
-export default withRouter(Tile);
+export default Tile;

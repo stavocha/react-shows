@@ -4,11 +4,12 @@ export interface Item {
     title: string;
     score?: number;
     description: string;
+    relatedItems?: object[],
 }
 
 export enum TileTypes {
-    ShowTile,
-    ActorTile,
-    CharacterTile,
-    SeasonTile,
+    Show,
+    Actor,
+    Character,
+    Season,
 }

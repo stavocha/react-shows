@@ -1,79 +1,44 @@
 import React, { useState, useEffect } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { TileTypes } from '../types';
+import { formatRawSingleShow } from '../utils';
+import Tile from '../components/tile'
 
-interface Props { id: string };
+interface Props extends RouteComponentProps { 
+    id: string,
+};
 
-const Show:React.FC<Props> = ({ id }) => {
+const Show:React.FC<Props> = ({ id, history}) => {
     const [showDetails, setShowDetails] = useState()
-    const [cast, setCastDetails] = useState()
     useEffect(() => {
 
         // fetch from API
-        fetch(`http://api.tvmaze.com/shows/${id}`)
+        fetch(`http://api.tvmaze.com/shows/${id}?embed[]=cast`)
             .then(res => res.json())
+            .then(data => formatRawSingleShow(data))
             .then(data => setShowDetails(data));
-
-        fetch(`http://api.tvmaze.com/shows/${id}/cast`)
-            .then(res => res.json())
-            .then(data => setCastDetails(data));
     } ,[ id ]);
 
-
     console.log('showDetails: ', showDetails);
-    console.log('cast: ', cast);
 
-    if (!showDetails || !cast) {
+    const onActorClick = (id:string) => {
+        history.push(`/actor/${id}`)
+    }
+
+    if (!showDetails) {
         return null;
     }
 
-    return (
-        <div style={{ display: 'flex', padding: '2rem' }}>
-            <div>
-                <img
-                    style={{ width: '600px' }}
-                    src={showDetails.image.original}
-                    alt={showDetails.name}
-                />
-            </div>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    textAlign: 'left',
-                    marginLeft: '2rem',
-                }}
-            >
-                <h1>{showDetails.name}</h1>
-                <p
-                    dangerouslySetInnerHTML={{
-                        __html: showDetails.summary,
-                    }}
-                ></p>
-                {cast && (
-                    <>
-                        <h2>Cast</h2>
-                        <div
-                            style={{
-                                flexFlow: 'row',
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                            }}
-                        >
-                            {cast.map((p: any) => (
-                                <div key={p.character.id}>
-                                   { p.person.image && <img
-                                        src={p.person.image.medium}
-                                        style={{ marginRight: '1rem' }}
-                                        alt={p.person.name}
-                                    />}
-                                    <div>{p.person.name}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                )}
+    return showDetails && (
+        <div>
+            <Tile type={TileTypes.Show} data={showDetails} hideName />
+            <div className="characters">
+                {showDetails.relatedItems.map((cast: any, index:number) => (
+                    <Tile type={TileTypes.Character} onTileClick={onActorClick} data={cast} key={index}/>
+                ))}
             </div>
         </div>
-    );
+    )
 }
 
-export default Show;
+export default withRouter(Show);

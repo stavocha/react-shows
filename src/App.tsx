@@ -5,7 +5,7 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom';
-import { formatRawShows } from './utils';
+import { formatRawShowInList } from './utils';
 import Actor from './routes/Actor';
 import Show from './routes/Show';
 import Home from './routes/Home';
@@ -23,7 +23,7 @@ export default () => {
         // fetch from API
         fetch(`http://api.tvmaze.com/search/shows?q=${query}`)
             .then(res => res.json())
-            .then(data => data.map(formatRawShows))
+            .then(data => data.map(formatRawShowInList))
             .then(data => setShows(data));
     };
 
@@ -38,9 +38,9 @@ export default () => {
                     <Route path="/show/:id"
                         render={ (props) => <Show id={ props.match.params.id } /> }
                     />
-                    <Route exact path="/actor/:actorId">
-                        <Actor />
-                    </Route>
+                    <Route path="/actor/:id"
+                        render={ (props) => <Actor id={ props.match.params.id } /> }
+                    />
                     <Redirect to="/home" />
                 </Switch>
             </Router>
