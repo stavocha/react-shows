@@ -1,23 +1,17 @@
 import * as React from 'react';
-import Header from '../components/header/Header';
 import { TileTypes, Item } from '../types';
-import List from '../components/list/List';
+import List from '../components/list';
 
 interface IHomeProps {
-    handleSearchChange(e: React.ChangeEvent<HTMLInputElement>): void;
-    q: string;
     shows: Item[];
 }
 
-export const Home: React.FC<IHomeProps> = ({
-    handleSearchChange,
-    q,
+const Home: React.FC<IHomeProps> = ({
     shows,
-}) => {
-    return (
+}) => (
         <div>
-            <Header handleSearchChange={handleSearchChange} q={q} />
             <List items={shows} itemType={TileTypes.ShowTile} />
         </div>
     );
-};
+
+export default Home;

@@ -1,68 +1,49 @@
-import React, { ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import {
     HashRouter as Router,
     Switch,
     Route,
     Redirect,
 } from 'react-router-dom';
-
-import { Item } from './types';
-import './App.css';
+import { formatRawShows } from './utils';
+import Actor from './routes/Actor';
 import Show from './routes/Show';
-import { Home } from './routes/Home';
+import Home from './routes/Home';
+import Header from './components/header';
 
-interface Props {}
+import './App.css';
 
-interface State {
-    q: string;
-    shows: Item[];
-}
+export default () => {
 
-export default class App extends React.Component<Props, State> {
-    state = {
-        q: '',
-        shows: [],
-    };
+    const [query, setQuery] = useState('');
+    const [shows, setShows] = useState([]);
 
-    handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const query = event.target.value;
-        this.setState({ q: query });
-
+    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
         // fetch from API
         fetch(`http://api.tvmaze.com/search/shows?q=${query}`)
             .then(res => res.json())
-            .then(data => this.setState({ shows: data.map(_formatRawShows) }));
+            .then(data => data.map(formatRawShows))
+            .then(data => setShows(data));
     };
 
-    render() {
-        const { q, shows } = this.state;
-        return (
-            <div className="App">
-                <Router>
-                    <Switch>
-                        <Route path="/home">
-                            <Home
-                                q={q}
-                                shows={shows}
-                                handleSearchChange={this.handleSearchChange}
-                            />
-                        </Route>
-                        <Route path="/show/:id" component={Show} />
-                        <Redirect to="/home" />
-                    </Switch>
-                </Router>
-            </div>
-        );
-    }
-}
-
-function _formatRawShows(item: any): Item {
-    const { score, show } = item;
-    return {
-        id: show.id,
-        pic: show.image ? show.image.medium : '', // unsafe...
-        title: show.name,
-        score,
-        description: show.summary,
-    };
+    return (
+        <div className="App">
+            <Header q={query} handleSearchChange={handleSearchChange} />
+            <Router>
+                <Switch>
+                    <Route path="/home">
+                        <Home shows={shows} />
+                    </Route>
+                    <Route path="/show/:id"
+                        render={ (props) => <Show id={ props.match.params.id } /> }
+                    />
+                    <Route exact path="/actor/:actorId">
+                        <Actor />
+                    </Route>
+                    <Redirect to="/home" />
+                </Switch>
+            </Router>
+        </div>
+    );
 }
