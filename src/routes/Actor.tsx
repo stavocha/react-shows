@@ -1,33 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import Tile from '../components/tile'
-import { TileTypes } from '../types'
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import Tile from '../components/tile';
+import { TileTypes } from '../types';
+import { formatRawCast, formatRawSingleShow } from '../utils';
 
-interface Props { id: string };
 
-const ActorDetails:React.FC<Props> = ({ id }) => {
-    
-    const [currentActor] = useState({ pic: '', title: 'myTitle', description: 'myDes', id:'myId' });
-    const [credits, setCredits] = useState([]);
+interface Props extends RouteComponentProps { 
+    id: string,
+};
+const ActorDetails:React.FC<Props> = ({ id, history }) => {
+    const [currentActor,setCurrentActor] = useState();
 
-    useEffect(() => {
-        
-        // fetch actor credits (which shows he/she played in)
-        fetch(`http://api.tvmaze.com/people/${id}/castcredits?embed=show`)
+    useEffect(() => {        
+        // fetch actor details
+        fetch(`http://api.tvmaze.com/people/${id}?embed=castcredits`)
             .then(res => res.json())
-            .then(credits => credits.map((credit:any) => credit._embedded.show))
-            .then(credits => setCredits(credits));
+            .then(data => formatRawCast(data))
+            .then(data => setCurrentActor(data));
     }, [id])
 
-    return <div>
-            {currentActor && (
+    useEffect(() => {        
+        // fetch actor credits (which shows he/she played in)
+        if (!currentActor || !currentActor.relatedItems) return;
+        if (!currentActor.relatedItems.length) {
+            fetch(`http://api.tvmaze.com/people/${id}/castcredits?embed=show`)
+                .then(res => res.json())
+                .then(data => data.map((item:any) => item._embedded.show))
+                .then(shows => shows.map(formatRawSingleShow))
+                .then(relatedItems => setCurrentActor({
+                    ...currentActor,
+                    relatedItems,
+                }));
+        }
+    }, [currentActor])
+
+    const onShowClick = (id:string) => {
+        history.push(`/show/${id}`)
+    }
+    if (!currentActor) {
+        return null;
+    }
+
+    return currentActor && (<div>
                 <Tile type={TileTypes.Actor} data={currentActor} />
-            )}
             <div className="credits">
-                {credits.length && credits.map((show:any) => (
-                    <Tile type={TileTypes.Show} data={show} hideSummary hideName />
+                {currentActor.relatedItems.map((show:any) => (
+                    <Tile type={TileTypes.Show} onTileClick={onShowClick} data={show} hideSummary hideName />
                 ))}
             </div>
-        </div>;
+    </div>);
 }
 
-export default ActorDetails;
+export default withRouter(ActorDetails);

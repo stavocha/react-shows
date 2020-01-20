@@ -11,7 +11,6 @@ interface Props extends RouteComponentProps {
 const Show:React.FC<Props> = ({ id, history}) => {
     const [showDetails, setShowDetails] = useState()
     useEffect(() => {
-
         // fetch from API
         fetch(`http://api.tvmaze.com/shows/${id}?embed[]=cast`)
             .then(res => res.json())

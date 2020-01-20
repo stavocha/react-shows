@@ -4,6 +4,7 @@ export function formatRawShowInList(item: any): Item {
  const { score, show, _embedded } = item;
  return formatRawSingleShow({ score, _embedded , ...show });
 }
+
 export function formatRawSingleShow(item: any): Item {
  const { id, score, name, image, summary, _embedded } = item;
  return {
@@ -15,8 +16,10 @@ export function formatRawSingleShow(item: any): Item {
      relatedItems: _embedded && _embedded.cast ? _embedded.cast.map(formatRawCast): [],
  };
 }
-function formatRawCast(item: any): Item {
- const { person, _embedded } = item;
+
+export function formatRawCast(item: any): Item {
+ let { person, _embedded } = item;
+ if(person === undefined) person = item;
  return {
      id: person.id,
      pic: person.image ? person.image.medium : '', // unsafe...
