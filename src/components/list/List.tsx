@@ -7,7 +7,7 @@ import Tile from '../tile/Tile';
 interface Props {
     items: Item[];
     itemType: TileTypes;
-    onItemClick: (id:string) => void;
+    onItemClick: (item:Item) => void;
 }
 
 export default function List({ items, itemType, onItemClick }: Props): ReactElement {

@@ -13,7 +13,7 @@ export function formatRawSingleShow(item: any): Item {
      title: name,
      score,
      description: summary,
-     relatedItems: _embedded && _embedded.cast ? _embedded.cast.map(formatRawCast): [],
+     relatedItems: _embedded && _embedded.cast ? _embedded.cast.map(formatRawCast): undefined,
  };
 }
 
@@ -25,6 +25,6 @@ export function formatRawCast(item: any): Item {
      pic: person.image ? person.image.medium : '', // unsafe...
      title: person.name,
      description: person.summary,
-     relatedItems: _embedded && _embedded.shows ? _embedded.shows.map(formatRawSingleShow): [],
+     relatedItems: _embedded && _embedded.shows ? _embedded.shows.map(formatRawSingleShow): undefined,
  };
 }

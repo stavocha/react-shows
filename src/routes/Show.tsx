@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { TileTypes } from '../types';
-import { formatRawSingleShow } from '../utils';
+import { useSelector,useDispatch } from 'react-redux';
+import { TileTypes, Item } from '../types';
 import Tile from '../components/tile'
-
+import { RootState } from '../redux/rootReducer';
+import { fetchShowDetails } from '../redux/features/showDetails/showDetailsSlice';
 interface Props extends RouteComponentProps { 
     id: string,
 };
 
 const Show:React.FC<Props> = ({ id, history}) => {
-    const [showDetails, setShowDetails] = useState()
+    // const [showDetails, setShowDetails] = useState()
+    const { selected:showDetails } = useSelector((state:RootState) => state.show);
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        // fetch from API
-        fetch(`http://api.tvmaze.com/shows/${id}?embed[]=cast`)
-            .then(res => res.json())
-            .then(data => formatRawSingleShow(data))
-            .then(data => setShowDetails(data));
-    } ,[ id ]);
+        debugger;
+        if(!showDetails.id || !showDetails.relatedItems) {
+            dispatch(fetchShowDetails(id));
+        }
+    } ,[ showDetails, id ]);
 
     console.log('showDetails: ', showDetails);
 
-    const onActorClick = (id:string) => {
-        history.push(`/actor/${id}`)
+    const onActorClick = (item: Item) => {
+        history.push(`/actor/${item.id}`)
     }
 
     if (!showDetails) {
@@ -32,7 +35,7 @@ const Show:React.FC<Props> = ({ id, history}) => {
         <div>
             <Tile type={TileTypes.Show} data={showDetails} hideName />
             <div className="characters">
-                {showDetails.relatedItems.map((cast: any, index:number) => (
+                {!showDetails.relatedItems ? null : showDetails.relatedItems.map((cast: any, index:number) => (
                     <Tile type={TileTypes.Character} onTileClick={onActorClick} data={cast} key={index}/>
                 ))}
             </div>

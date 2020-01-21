@@ -1,11 +1,13 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import {
     HashRouter as Router,
     Switch,
     Route,
     Redirect,
 } from 'react-router-dom';
-import { formatRawShowInList } from './utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './redux/rootReducer';
+import { setSearchResults, setSearchQuery, fetchShows } from './redux/features/search/searchSlice'
 import Actor from './routes/Actor';
 import Show from './routes/Show';
 import Home from './routes/Home';
@@ -15,25 +17,22 @@ import './App.css';
 
 export default () => {
 
-    const [query, setQuery] = useState('');
-    const [shows, setShows] = useState([]);
-
+    const { results, searchTerm } =
+        useSelector((state: RootState) => state.search);
+    const dispatch = useDispatch();
+    
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setQuery(event.target.value);
-        // fetch from API
-        fetch(`http://api.tvmaze.com/search/shows?q=${query}`)
-            .then(res => res.json())
-            .then(data => data.map(formatRawShowInList))
-            .then(data => setShows(data));
+        dispatch(setSearchQuery({ q: event.target.value }));
+        dispatch(fetchShows(event.target.value));
     };
 
     return (
         <div className="App">
-            <Header q={query} handleSearchChange={handleSearchChange} />
+            <Header handleSearchChange={handleSearchChange} />
             <Router>
                 <Switch>
                     <Route path="/home">
-                        <Home shows={shows} />
+                        <Home shows={results} />
                     </Route>
                     <Route path="/show/:id"
                         render={ (props) => <Show id={ props.match.params.id } /> }

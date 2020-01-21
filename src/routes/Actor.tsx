@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Tile from '../components/tile';
-import { TileTypes } from '../types';
+import { TileTypes, Item } from '../types';
 import { formatRawCast, formatRawSingleShow } from '../utils';
 
 
@@ -34,8 +34,8 @@ const ActorDetails:React.FC<Props> = ({ id, history }) => {
         }
     }, [currentActor])
 
-    const onShowClick = (id:string) => {
-        history.push(`/show/${id}`)
+    const onShowClick = (item: Item) => {
+        history.push(`/show/${item.id}`)
     }
     if (!currentActor) {
         return null;
