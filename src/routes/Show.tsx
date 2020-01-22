@@ -15,7 +15,6 @@ const Show:React.FC<Props> = ({ id, history}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        debugger;
         if(!showDetails.id || !showDetails.relatedItems) {
             dispatch(fetchShowDetails(id));
         }

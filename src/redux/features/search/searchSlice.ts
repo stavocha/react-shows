@@ -3,9 +3,6 @@ import { formatRawShowInList } from '../../../utils';
 import { Item } from '../../../types';
 import { AppThunkType } from '../../store'
 
-interface query {
- searchTerm: string,
-}
 interface setQuery {
  q: string,
 }
@@ -15,8 +12,9 @@ interface setResults {
 }
 
 type searchState = {
+ searchTerm: string,
  results: Array<Item>,
-} & query;
+}
 
 const initialState: searchState = {
  searchTerm: '',
