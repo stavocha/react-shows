@@ -1,13 +1,10 @@
 import React from 'react';
 import get from 'lodash/get';
-import { observer, inject } from 'mobx-react';
 import { withRouter } from 'react-router';
 
 import './tile.css';
 import { TileTypes } from '../';
 
-@inject('stores')
-@observer
 class Tile extends React.Component {
 
     processData = (type, data) => {
@@ -36,23 +33,14 @@ class Tile extends React.Component {
             history,
             type,
             data,
-            stores,
         } = this.props;
 
-        const {
-            showsStore,
-            actorStore,
-        } = stores;
 
         let url = '';
         switch(type) {
             case TileTypes.show:
-                showsStore.setCurrentShow(data);
-                url = `/show/${data.id}`;
                 break;
             case TileTypes.character:
-                actorStore.setActor(data);
-                url = `/actor/${data.person.id}`;
                 break;
             case TileTypes.season:
             case TileTypes.actor:

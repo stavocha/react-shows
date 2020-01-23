@@ -26,12 +26,6 @@ class ShowDetails extends React.Component {
             <div>
                 {show && (
                     <div>
-                        <Tile type={TileTypes.show} data={show} hideName />
-                        <div className="characters">
-                            {show._embedded.cast.map(cast => (
-                                <Tile type={TileTypes.character} data={cast} key={cast.character.id}/>
-                            ))}
-                        </div>
                     </div>
                 )}
             </div>

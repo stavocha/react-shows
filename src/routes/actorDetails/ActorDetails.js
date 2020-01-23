@@ -1,12 +1,9 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
 import { withRouter } from 'react-router';
 
 import { Tile, TileTypes } from '../../components';
 import "./actor.css";
 
-@inject('stores')
-@observer
 class ActorDetails extends React.Component {
 
     state = {
@@ -23,19 +20,10 @@ class ActorDetails extends React.Component {
     }
 
     render() {
-        const { actorStore } = this.props.stores;
         const { credits } = this.state;
 
         return (
             <div>
-                {actorStore.actor && (
-                    <Tile type={TileTypes.actor} data={actorStore.actor} />
-                )}
-                <div className="credits">
-                    {credits && credits.map(show => (
-                        <Tile type={TileTypes.show} data={show} key={show.id} hideSummary hideName />
-                    ))}
-                </div>
             </div>
         );
     }
