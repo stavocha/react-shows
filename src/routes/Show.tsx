@@ -26,7 +26,6 @@ class Show extends React.Component<IShowProps, IShowState> {
 
     render() {
         const { showDetails, cast } = this.state;
-        console.log(showDetails);
 
         if (!showDetails) {
             return null;
@@ -66,8 +65,8 @@ class Show extends React.Component<IShowProps, IShowState> {
                                 }}
                             >
                                 {cast.map((p: any) => (
-                                    <Link to={`/person/${p.person.id}`}>
-                                        <div key={p.person.id}>
+                                    <Link key={p.person.id} to={`/person/${p.person.id}`}>
+                                        <div >
                                             <img
                                                 src={p.person.image.medium}
                                                 style={{ marginRight: '1rem' }}
