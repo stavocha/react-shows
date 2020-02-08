@@ -18,7 +18,7 @@ function Tile({
     return (
         <div className="tile">
             <div className="image" onClick={() => history.push(`/show/${id}`)}>
-                <img src={pic} />
+                <img src={pic} alt={title}/>
             </div>
 
             <h4>

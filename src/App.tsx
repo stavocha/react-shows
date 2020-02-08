@@ -5,19 +5,10 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom';
-import Header from './components/header/Header';
-import List from './components/list/List';
-import { TileTypes, Item } from './types';
+import { Item } from './types';
 import './App.css';
 import Show from './routes/Show';
 import { Home } from './routes/Home';
-// import { shows as rawShows } from './mocks';
-
-// Mock data
-// TODO - replace with real
-// const shows: Item[] = rawShows
-//     .filter(show => show.show.image)
-//     .map(formatRawShows);
 
 function formatRawShows(item: any): Item {
     const { score, show } = item;

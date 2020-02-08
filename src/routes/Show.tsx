@@ -25,7 +25,6 @@ class Show extends React.Component<IShowProps, IShowState> {
     }
 
     render() {
-        const { match } = this.props;
         const { showDetails, cast } = this.state;
         console.log(showDetails);
 
@@ -71,6 +70,7 @@ class Show extends React.Component<IShowProps, IShowState> {
                                         <img
                                             src={p.person.image.medium}
                                             style={{ marginRight: '1rem' }}
+                                            alt={p.person.name}
                                         />
                                         <div>{p.person.name}</div>
                                     </div>
