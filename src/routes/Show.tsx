@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 
 type TParams = { id: string };
 
@@ -66,14 +66,16 @@ class Show extends React.Component<IShowProps, IShowState> {
                                 }}
                             >
                                 {cast.map((p: any) => (
-                                    <div key={p.person.id}>
-                                        <img
-                                            src={p.person.image.medium}
-                                            style={{ marginRight: '1rem' }}
-                                            alt={p.person.name}
-                                        />
-                                        <div>{p.person.name}</div>
-                                    </div>
+                                    <Link to={`/person/${p.person.id}`}>
+                                        <div key={p.person.id}>
+                                            <img
+                                                src={p.person.image.medium}
+                                                style={{ marginRight: '1rem' }}
+                                                alt={p.person.name}
+                                            />
+                                            <div>{p.person.name}</div>
+                                        </div>
+                                    </Link>
                                 ))}
                             </div>
                         </>

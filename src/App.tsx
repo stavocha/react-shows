@@ -9,6 +9,8 @@ import { Item } from './types';
 import './App.css';
 import Show from './routes/Show';
 import { Home } from './routes/Home';
+import 'papercss/dist/paper.min.css'
+import Person from './routes/Person';
 
 function formatRawShows(item: any): Item {
     const { score, show } = item;
@@ -58,6 +60,7 @@ class App extends React.Component<Props, State> {
                             />
                         </Route>
                         <Route path="/show/:id" component={Show} />
+                        <Route path="/person/:id" component={Person} />
 
                         <Redirect to="/home" />
                     </Switch>
