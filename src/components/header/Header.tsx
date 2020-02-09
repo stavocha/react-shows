@@ -9,7 +9,8 @@ interface Props {
 
 export default function Header({ q, handleSearchChange }: Props): ReactElement {
     const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
-
+    console.log('user', user);
+    
     return (
         <div>
             <nav>

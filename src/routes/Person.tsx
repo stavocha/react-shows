@@ -1,12 +1,24 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import { useRole } from '../hooks/useRole';
 
 function Person() {
+    const history = useHistory();
     const [person, setPerson] = React.useState<any>(null);
     const [shows, setShows] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const params = useParams<any>();
+    const allowed = useRole(['super admin']);
     React.useEffect(() => {
+        if (!allowed) {
+            history.goBack();
+        }
+    }, [allowed, history])
+
+    React.useEffect(() => {
+        if(!allowed) {
+            return;
+        }
         // fetch from API
         setLoading(true);
         const fetchDate = async () => {
@@ -21,12 +33,12 @@ function Person() {
             setLoading(false);
         };
         fetchDate();
-    }, [params.id]);
+    }, [allowed, params.id]);
 
     if (loading) {
         return <div>'loading...'</div>;
     }
-    console.log(shows);
+    
     return (
         <div style={{ display: 'flex', padding: '2rem' }}>
             <div>
