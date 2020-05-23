@@ -15,4 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag react-app:$(date +%s)
+      run: docker build . --file Dockerfile --tag stavocha/react-app:$(date +%s)
+    - name: Push docker image to registry
+      run: docker push stavocha/react-app:$(date +%s)
+
