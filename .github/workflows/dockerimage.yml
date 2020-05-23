@@ -14,13 +14,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.2
+      with:
+          versionSpec: '5.2.x'
+    - name: Use GitVersion
+      id: gitversion 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag stavocha/react-app:$GITHUB_RUN_NUMBER
+      run: docker build . --file Dockerfile --tag stavocha/react-app:${{ steps.gitversion.outputs.semVer }}
     - name: Login to GitHub Docker Registry
       run: docker login docker.io --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
       env:
         DOCKER_USERNAME: ${{ secrets.REPO_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.REPO_PASS }}
     - name: Push docker image to registry
-      run: docker push stavocha/react-app:$GITHUB_RUN_NUMBER
+      run: docker push stavocha/react-app:${{ steps.gitversion.outputs.semVer }}
 
