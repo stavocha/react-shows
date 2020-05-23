@@ -14,10 +14,10 @@ jobs:
 
     steps:
     - name: Set tag value
-      run: tag = $(date +%s)
+      run: TAG=$(date +%s)
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag stavocha/react-app:$tag
+      run: docker build . --file Dockerfile --tag stavocha/react-app:$TAG
     - name: Push docker image to registry
-      run: docker push stavocha/react-app:$tag
+      run: docker push stavocha/react-app:$TAG
 
