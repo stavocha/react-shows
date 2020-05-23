@@ -43,7 +43,7 @@ jobs:
         echo "$SSH_KEY" > key.pem
         chmod 400 key.pem
         scp -o StrictHostKeyChecking=no -i key.pem ${GITHUB_WORKSPACE}/docker-compose.yml ubuntu@$MACHINE_IP:~/ 
-        ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@$MACHINE_IP "sudo export TAG=${{needs.build.outputs.version}} && sudo docker-compose -f ~/docker-compose.yml up -d"
+        ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@$MACHINE_IP "export TAG=${{needs.build.outputs.version}} && sudo docker-compose -f ~/docker-compose.yml up -d"
       env:
         TAG: ${{needs.build.outputs.version}}
         SSH_KEY: ${{secrets.DOCKER_SSH_PRIVATE_KEY}}
