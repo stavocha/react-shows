@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: Set tag value
-    - run: tag = $(date +%s)
+      run: tag = $(date +%s)
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag stavocha/react-app:$tag
