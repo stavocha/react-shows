@@ -49,3 +49,4 @@ jobs:
         SSH_KEY: ${{secrets.DOCKER_SSH_PRIVATE_KEY}}
         MACHINE_IP: "13.59.245.80"
 
+
