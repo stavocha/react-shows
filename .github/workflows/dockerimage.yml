@@ -41,6 +41,7 @@ jobs:
     - name: Deploy to Docker Compose
       run: | 
         echo "$SSH_KEY" > key.pem
+        chmod 400 key.pem
         scp -o StrictHostKeyChecking=no -i key.pem docker-compose.yml ubuntu@$MACHINE_IP:~/ 
         ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@$MACHINE_IP
         export TAG=${{needs.build.outputs.version}}
