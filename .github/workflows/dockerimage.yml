@@ -13,11 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set tag value
-      run: TAG=$(date +%s)
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag stavocha/react-app:$TAG
+      run: docker build . --file Dockerfile --tag stavocha/react-app:$GITHUB_RUN_NUMBER
     - name: Push docker image to registry
-      run: docker push stavocha/react-app:$TAG
+      run: docker push stavocha/react-app:$GITHUB_RUN_NUMBER
 
