@@ -37,6 +37,20 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### CI/CD
+
+The CI/CD tool used for this project is GitHub Actions.
+The CI/CD process can be found in this repository under .github\workflows.
+You can find there a workflow that:
+ -builds the docker image after each code change.
+ -Tags the docker image.
+ -Pushes image to a docker hub private registry.
+ -Deploys to ec2 instance running docker compose. 
+ 
+ You can reach the endpoint at 13.59.245.80:5000
+
+
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
