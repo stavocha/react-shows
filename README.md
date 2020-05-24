@@ -42,9 +42,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 The CI/CD tool used for this project is GitHub Actions.<br />
 The CI/CD process can be found in this repository under .github/workflows.<br />
 You can find there a workflow that:<br />
- -builds the docker image after each code change.<br />
- -Tags the docker image.<br />
- -Pushes image to a docker hub private registry.<br />
+ -build and push docker image to dockerhub private repository.<br /> 
  -Deploys to ec2 instance running docker compose.<br /> 
  <br />
  You can reach the endpoint at 13.59.245.80:5000<br />
