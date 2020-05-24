@@ -40,7 +40,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ### CI/CD
 
 The CI/CD tool used for this project is GitHub Actions.<br />
-The CI/CD process can be found in this repository under .github\workflows.<br />
+The CI/CD process can be found in this repository under .github/workflows.<br />
 You can find there a workflow that:<br />
  -builds the docker image after each code change.<br />
  -Tags the docker image.<br />
